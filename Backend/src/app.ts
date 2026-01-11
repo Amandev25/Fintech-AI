@@ -13,8 +13,18 @@ import { errorHandler } from "./middlewares/error.middleware";
 export const createApp = () => {
   const app = express();
 
-  // Basic middlewares
-  app.use(cors());
+  // CORS configuration
+  app.use(cors({
+    origin: [
+      'http://localhost:5173',
+      'https://fintech-ai-frontend.vercel.app',
+      /\.vercel\.app$/
+    ],
+    credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization']
+  }));
+  
   app.use(json());
   app.use(morgan("dev"));
 
