@@ -13,34 +13,16 @@ import { errorHandler } from "./middlewares/error.middleware";
 export const createApp = () => {
   const app = express();
 
-  // CORS configuration
+  // CORS configuration - Allow all Vercel domains
   app.use(cors({
-    origin: function (origin, callback) {
-      const allowedOrigins = [
-        'http://localhost:5173',
-        'https://fintech-ai-client.vercel.app',
-        'https://fintech-ai-frontend.vercel.app'
-      ];
-      
-      // Allow requests with no origin (like mobile apps or curl)
-      if (!origin) return callback(null, true);
-      
-      // Check if origin is in allowed list or is a vercel.app domain
-      if (allowedOrigins.includes(origin) || origin.endsWith('.vercel.app')) {
-        callback(null, true);
-      } else {
-        callback(new Error('Not allowed by CORS'));
-      }
-    },
+    origin: true, // Allow all origins in development
     credentials: true,
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization'],
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
     exposedHeaders: ['Content-Length', 'Content-Type'],
-    maxAge: 86400 // 24 hours
+    preflightContinue: false,
+    optionsSuccessStatus: 204
   }));
-  
-  // Handle preflight requests
-  app.options('*', cors());
   
   app.use(json());
   app.use(morgan("dev"));
