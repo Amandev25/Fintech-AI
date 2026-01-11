@@ -15,15 +15,32 @@ export const createApp = () => {
 
   // CORS configuration
   app.use(cors({
-    origin: [
-      'http://localhost:5173',
-      'https://fintech-ai-client.vercel.app',
-      /\.vercel\.app$/
-    ],
+    origin: function (origin, callback) {
+      const allowedOrigins = [
+        'http://localhost:5173',
+        'https://fintech-ai-client.vercel.app',
+        'https://fintech-ai-frontend.vercel.app'
+      ];
+      
+      // Allow requests with no origin (like mobile apps or curl)
+      if (!origin) return callback(null, true);
+      
+      // Check if origin is in allowed list or is a vercel.app domain
+      if (allowedOrigins.includes(origin) || origin.endsWith('.vercel.app')) {
+        callback(null, true);
+      } else {
+        callback(new Error('Not allowed by CORS'));
+      }
+    },
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization']
+    allowedHeaders: ['Content-Type', 'Authorization'],
+    exposedHeaders: ['Content-Length', 'Content-Type'],
+    maxAge: 86400 // 24 hours
   }));
+  
+  // Handle preflight requests
+  app.options('*', cors());
   
   app.use(json());
   app.use(morgan("dev"));
