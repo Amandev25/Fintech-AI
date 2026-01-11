@@ -13,6 +13,9 @@ export default defineConfig({
       '@': path.resolve(__dirname, './src'),
     },
   },
+  build: {
+    chunkSizeWarningLimit: 1000, // Increase to 1000kb to suppress warning
+  },
   server: {
     proxy: {
       '/auth': 'http://localhost:8000',
