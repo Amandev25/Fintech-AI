@@ -17,7 +17,7 @@ export const createApp = () => {
   app.use(cors({
     origin: [
       'http://localhost:5173',
-      'https://fintech-ai-frontend.vercel.app',
+      'https://fintech-ai-client.vercel.app',
       /\.vercel\.app$/
     ],
     credentials: true,
@@ -32,6 +32,19 @@ export const createApp = () => {
   app.get("/health", (_req, res) => {
     res.json({ status: "ok" });
   });
+
+  // Root endpoint
+  app.get("/", (_req, res) => {
+    res.json({ 
+      message: "FinanceAI Backend API",
+      status: "running",
+      version: "1.0.0"
+    });
+  });
+
+  // Ignore favicon requests
+  app.get("/favicon.ico", (_req, res) => res.status(204).end());
+  app.get("/favicon.png", (_req, res) => res.status(204).end());
 
   // Feature modules
   app.use("/auth", authRouter);
