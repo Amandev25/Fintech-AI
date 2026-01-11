@@ -1,0 +1,68 @@
+### Health Check
+GET http://localhost:8000/health
+
+### Register User
+POST http://localhost:8000/auth/register
+Content-Type: application/json
+
+{
+  "name": "Test User",
+  "email": "test@example.com",
+  "password": "password123"
+}
+
+### Login User
+POST http://localhost:8000/auth/login
+Content-Type: application/json
+
+{
+  "email": "test@example.com",
+  "password": "password123"
+}
+
+### Get Expenses (requires token)
+GET http://localhost:8000/expenses
+Authorization: Bearer YOUR_TOKEN_HERE
+
+### Create Expense (requires token)
+POST http://localhost:8000/expenses
+Content-Type: application/json
+Authorization: Bearer YOUR_TOKEN_HERE
+
+{
+  "amount": 50.00,
+  "category": "Food",
+  "date": "2026-01-10",
+  "description": "Lunch at restaurant"
+}
+
+### Get Budgets (requires token)
+GET http://localhost:8000/budgets
+Authorization: Bearer YOUR_TOKEN_HERE
+
+### Create Budget (requires token)
+POST http://localhost:8000/budgets
+Content-Type: application/json
+Authorization: Bearer YOUR_TOKEN_HERE
+
+{
+  "category": "Food",
+  "allocated": 400
+}
+
+### Delete Budget (requires token)
+DELETE http://localhost:8000/budgets/Food
+Authorization: Bearer YOUR_TOKEN_HERE
+
+### Get Dashboard Summary (requires token)
+GET http://localhost:8000/dashboard/summary
+Authorization: Bearer YOUR_TOKEN_HERE
+
+### Chat with AI (requires token)
+POST http://localhost:8000/ai/chat
+Content-Type: application/json
+Authorization: Bearer YOUR_TOKEN_HERE
+
+{
+  "message": "How can I save more money?"
+}
