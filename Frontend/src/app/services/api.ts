@@ -1,5 +1,5 @@
 // API Configuration and Base Client
-const API_BASE_URL = 'http://localhost:8000';
+const API_BASE_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:8000';
 
 class ApiClient {
   private baseUrl: string;
