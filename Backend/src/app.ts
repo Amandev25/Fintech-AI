@@ -14,15 +14,18 @@ export const createApp = () => {
   const app = express();
 
   // CORS configuration - Allow all Vercel domains
-  app.use(cors({
-    origin: true, // Allow all origins in development
+app.use(
+  cors({
+    origin: "https://fintech-ai-client.vercel.app",
     credentials: true,
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH'],
-    allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
-    exposedHeaders: ['Content-Length', 'Content-Type'],
-    preflightContinue: false,
-    optionsSuccessStatus: 204
-  }));
+    methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+  })
+);
+app.options("*", (req, res) => {
+  res.sendStatus(200);
+});
+
   
   app.use(json());
   app.use(morgan("dev"));
